@@ -8,28 +8,28 @@ import xyz.mattclifton.play.stringent.test.models.TestContent
 import scala.concurrent.{ExecutionContext, Future}
 
 class Status4Controller(implicit executionContext: ExecutionContext) extends Controller with StringentActions {
-  def withBodyParser = Action.stringent.withContent[TestContent, OkStatus, BadRequestStatus, UnauthorizedStatus, CreatedStatus](parse.json[TestContent]){ request =>
+  def withBodyParser = Action.stringent.withContent[TestContent, OkResult, BadRequestResult, UnauthorizedResult, CreatedResult](parse.json[TestContent]){ request =>
     Ok
   }
 
-  def anyContent = Action.stringent.anyContent[OkStatus, BadRequestStatus, UnauthorizedStatus, CreatedStatus]{ request =>
+  def anyContent = Action.stringent.anyContent[OkResult, BadRequestResult, UnauthorizedResult, CreatedResult]{ request =>
     Ok
   }
 
-  def block = Action.stringent[OkStatus, BadRequestStatus, UnauthorizedStatus, CreatedStatus]{
+  def block = Action.stringent[OkResult, BadRequestResult, UnauthorizedResult, CreatedResult]{
     Ok
   }
 
-  def asyncBlock = Action.stringent.async[OkStatus, BadRequestStatus, UnauthorizedStatus, CreatedStatus]{
+  def asyncBlock = Action.stringent.async[OkResult, BadRequestResult, UnauthorizedResult, CreatedResult]{
     Future(Ok)
   }
 
-  def asyncAnyContent = Action.stringent.anyContentAsync[OkStatus, BadRequestStatus, UnauthorizedStatus, CreatedStatus]{ request =>
+  def asyncAnyContent = Action.stringent.anyContentAsync[OkResult, BadRequestResult, UnauthorizedResult, CreatedResult]{ request =>
 
     Future(Ok)
   }
 
-  def asyncBodyContent = Action.stringent.withContentAsync[TestContent, OkStatus, BadRequestStatus, UnauthorizedStatus, CreatedStatus](parse.json[TestContent]){ request =>
+  def asyncBodyContent = Action.stringent.withContentAsync[TestContent, OkResult, BadRequestResult, UnauthorizedResult, CreatedResult](parse.json[TestContent]){ request =>
     Future(Ok)
   }
 }

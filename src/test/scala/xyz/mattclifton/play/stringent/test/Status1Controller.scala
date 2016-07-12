@@ -8,27 +8,27 @@ import xyz.mattclifton.play.stringent.test.models.{TestResponse, TestContent}
 import scala.concurrent.{ExecutionContext, Future}
 
 class Status1Controller(implicit executionContext: ExecutionContext) extends Controller with StringentActions {
-  def withBodyParser = Action.stringent.withContent[TestContent, OkStatus](parse.json[TestContent]){ request =>
+  def withBodyParser = Action.stringent.withContent[TestContent, OkResult](parse.json[TestContent]){ request =>
     Ok
   }
 
-  def anyContent = Action.stringent.anyContent[OkStatus]{ request =>
+  def anyContent = Action.stringent.anyContent[OkResult]{ request =>
     Ok
   }
 
-  def block = Action.stringent[OkStatus]{
+  def block = Action.stringent[OkResult]{
     Ok
   }
 
-  def asyncBlock = Action.stringent.async[OkStatus]{
+  def asyncBlock = Action.stringent.async[OkResult]{
     Future(Ok)
   }
 
-  def asyncAnyContent = Action.stringent.anyContentAsync[OkStatus]{ request =>
+  def asyncAnyContent = Action.stringent.anyContentAsync[OkResult]{ request =>
     Future(Ok)
   }
 
-  def asyncBodyContent = Action.stringent.withContentAsync[TestContent, OkStatus](parse.json[TestContent]){ request =>
+  def asyncBodyContent = Action.stringent.withContentAsync[TestContent, OkResult](parse.json[TestContent]){ request =>
     Future(Ok)
   }
 
@@ -36,7 +36,7 @@ class Status1Controller(implicit executionContext: ExecutionContext) extends Con
     Ok.withContent(TestResponse(1, "test"))
   }
 
-  def redirect = Action.stringent[SeeOtherStatus]{
+  def redirect = Action.stringent[SeeOtherResult]{
     RedirectTo("https://mattclifton.xyz")
   }
 }
