@@ -3,7 +3,7 @@ package xyz.mattclifton.play.stringent
 import play.api.http.{HttpEntity, Writeable}
 import play.api.mvc._
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 import scala.reflect.runtime.universe._
 
 trait StringentActions extends Results {
@@ -54,6 +54,23 @@ trait StringentActions extends Results {
 
   trait StatusOf {
     def result: Result
+  }
+
+  object StatusOf1 {
+
+    class StringentActionResult[T, S1 <: StringentStatus](action: Action[T]) extends Action[T] {
+      def parser: BodyParser[T] = action.parser
+
+      def apply(request: Request[T]): Future[Result] = action.apply(request)
+    }
+
+    class AnyOf[S1 <: StringentStatus](s1: Option[S1]) extends StatusOf {
+      def result = s1.get
+    }
+
+    implicit def result1[S1 <: StringentStatus](s1: S1)(implicit tag: TypeTag[S1]) = {
+      new AnyOf[S1](Some(s1))
+    }
   }
 
   object StatusOf2 {
@@ -185,21 +202,38 @@ trait StringentActions extends Results {
        */
 
       //apply[A](bodyParser: BodyParser[A])(block: R[A] => Result): Action[A]
-      def withContent[A, S1 <: StringentStatus](bodyParser: BodyParser[A])(block: R[A] => S1)(implicit s1tag: TypeTag[S1]): Action[A] = action.async(bodyParser) { req: R[A] =>
-        Future.successful(block(req))
-      }
-
-      //apply(block: R[AnyContent] => Result): Action[AnyContent]
-//      def apply[S1 <: StringentStatus](block: R[AnyContent] => S1)(implicit s1tag: TypeTag[S1]): Action[AnyContent] = action { req: R[AnyContent] =>
-//        block(req)
-//      }
+      def withContent[A, S1 <: StringentStatus](bodyParser: BodyParser[A])(block: R[A] => StatusOf1.AnyOf[S1])(implicit s1tag: TypeTag[S1]): StatusOf1.StringentActionResult[A, S1] =
+        new StatusOf1.StringentActionResult[A, S1](action(bodyParser) { req: R[A] =>
+          block(req).result
+        })
 
       //apply(block: => Result): Action[AnyContent]
-//      def apply[S1 <: StringentStatus](block: => S1)(implicit s1tag: TypeTag[S1]): Action[AnyContent] = action.apply(block)
+      def apply[S1 <: StringentStatus](block: => StatusOf1.AnyOf[S1])(implicit s1tag: TypeTag[S1]): StatusOf1.StringentActionResult[AnyContent, S1] =
+        new StatusOf1.StringentActionResult[AnyContent, S1](action { block.result })
+
+      //apply(block: R[AnyContent] => Result): Action[AnyContent]
+      def anyContent[S1 <: StringentStatus](block: R[AnyContent] => StatusOf1.AnyOf[S1])(implicit s1tag: TypeTag[S1]): StatusOf1.StringentActionResult[AnyContent, S1] =
+        new StatusOf1.StringentActionResult[AnyContent, S1](action { req: R[AnyContent] =>
+          block(req).result
+        })
 
       //async(block: => Future[Result]): Action[AnyContent]
+      def async[S1 <: StringentStatus](block: => Future[StatusOf1.AnyOf[S1]])(implicit s1tag: TypeTag[S1], executionContext: ExecutionContext): StatusOf1.StringentActionResult[AnyContent, S1] =
+        new StatusOf1.StringentActionResult[AnyContent, S1](action.async {
+          block.map(_.result)
+        })
+
       //async(block: R[AnyContent] => Future[Result]): Action[AnyContent]
+      def anyContentAsync[S1 <: StringentStatus](block: R[AnyContent] => Future[StatusOf1.AnyOf[S1]])(implicit s1tag: TypeTag[S1], executionContext: ExecutionContext): StatusOf1.StringentActionResult[AnyContent, S1] =
+        new StatusOf1.StringentActionResult[AnyContent, S1](action.async{ req: R[AnyContent] =>
+          block(req).map(_.result)
+        })
+
       //async[A](bodyParser: BodyParser[A])(block: R[A] => Future[Result]): Action[A]
+      def withContentAsync[A, S1 <: StringentStatus](bodyParser: BodyParser[A])(block: R[A] => Future[StatusOf1.AnyOf[S1]])(implicit s1tag: TypeTag[S1], executionContext: ExecutionContext): StatusOf1.StringentActionResult[A, S1] =
+        new StatusOf1.StringentActionResult[A, S1](action.async(bodyParser) { req: R[A] =>
+          block(req).map(_.result)
+        })
 
       /*
        * Status 2
@@ -207,42 +241,77 @@ trait StringentActions extends Results {
 
       //apply[A](bodyParser: BodyParser[A])(block: R[A] => Result): Action[A]
       def withContent[A, S1 <: StringentStatus, S2 <: StringentStatus](bodyParser: BodyParser[A])(block: R[A] => StatusOf2.AnyOf[S1, S2])(implicit s1tag: TypeTag[S1], s2tag: TypeTag[S2]): StatusOf2.StringentActionResult[A, S1, S2] =
-        new StatusOf2.StringentActionResult[A, S1, S2](action.async(bodyParser) { req: R[A] =>
-          Future.successful(block(req).result)
+        new StatusOf2.StringentActionResult[A, S1, S2](action(bodyParser) { req: R[A] =>
+          block(req).result
         })
 
       //apply(block: => Result): Action[AnyContent]
       def apply[S1 <: StringentStatus, S2 <: StringentStatus](block: => StatusOf2.AnyOf[S1, S2])(implicit s1tag: TypeTag[S1], s2tag: TypeTag[S2]): StatusOf2.StringentActionResult[AnyContent, S1, S2] =
-        new StatusOf2.StringentActionResult[AnyContent, S1, S2](action.async { req: R[AnyContent] =>
-          Future.successful(block.result)
-        })
+        new StatusOf2.StringentActionResult[AnyContent, S1, S2](action { block.result })
 
       //apply(block: R[AnyContent] => Result): Action[AnyContent]
       // while OkStatus can be converted to StatusOf2.AnyOf[S1, S2], that is not it's usual type. so the compiler
       // thinks we're passing R[AnyContent] => OkStatus instead of R[AnyContent] => StatusOf2.AnyOf[S1, S2] and
-      // cant find the correct overload
+      // cant find the correct overload. this is why a rename is required
       def anyContent[S1 <: StringentStatus, S2 <: StringentStatus](block: R[AnyContent] => StatusOf2.AnyOf[S1, S2])(implicit s1tag: TypeTag[S1], s2tag: TypeTag[S2]): StatusOf2.StringentActionResult[AnyContent, S1, S2] =
-        new StatusOf2.StringentActionResult[AnyContent, S1, S2](action.async { req: R[AnyContent] =>
-          Future.successful(block(req).result)
+        new StatusOf2.StringentActionResult[AnyContent, S1, S2](action { req: R[AnyContent] =>
+          block(req).result
+        })
+
+      //async(block: => Future[Result]): Action[AnyContent]
+      def async[S1 <: StringentStatus, S2 <: StringentStatus](block: => Future[StatusOf2.AnyOf[S1, S2]])(implicit s1tag: TypeTag[S1], s2tag: TypeTag[S2], executionContext: ExecutionContext): StatusOf2.StringentActionResult[AnyContent, S1, S2] =
+        new StatusOf2.StringentActionResult[AnyContent, S1, S2](action.async {
+          block.map(_.result)
+        })
+
+      //async(block: R[AnyContent] => Future[Result]): Action[AnyContent]
+      def anyContentAsync[S1 <: StringentStatus, S2 <: StringentStatus](block: R[AnyContent] => Future[StatusOf2.AnyOf[S1, S2]])(implicit s1tag: TypeTag[S1], s2tag: TypeTag[S2], executionContext: ExecutionContext): StatusOf2.StringentActionResult[AnyContent, S1, S2] =
+        new StatusOf2.StringentActionResult[AnyContent, S1, S2](action.async{ req: R[AnyContent] =>
+          block(req).map(_.result)
+        })
+
+      //async[A](bodyParser: BodyParser[A])(block: R[A] => Future[Result]): Action[A]
+      def withContentAsync[A, S1 <: StringentStatus, S2 <: StringentStatus](bodyParser: BodyParser[A])(block: R[A] => Future[StatusOf2.AnyOf[S1, S2]])(implicit s1tag: TypeTag[S1], s2tag: TypeTag[S2], executionContext: ExecutionContext): StatusOf2.StringentActionResult[A, S1, S2] =
+        new StatusOf2.StringentActionResult[A, S1, S2](action.async(bodyParser) { req: R[A] =>
+          block(req).map(_.result)
         })
 
       /*
        * Status 3
        */
 
+      //apply[A](bodyParser: BodyParser[A])(block: R[A] => Result): Action[A]
       def withContent[A, S1 <: StringentStatus, S2 <: StringentStatus, S3 <: StringentStatus](bodyParser: BodyParser[A])(block: R[A] => StatusOf3.AnyOf[S1, S2, S3])(implicit s1tag: TypeTag[S1], s2tag: TypeTag[S2], s3tag: TypeTag[S3]): StatusOf3.StringentActionResult[A, S1, S2, S3] =
+        new StatusOf3.StringentActionResult[A, S1, S2, S3](action(bodyParser) { req: R[A] =>
+          block(req).result
+        })
+
+      //apply(block: => Result): Action[AnyContent]
+      def apply[S1 <: StringentStatus, S2 <: StringentStatus, S3 <: StringentStatus](block: => StatusOf3.AnyOf[S1, S2, S3])(implicit s1tag: TypeTag[S1], s2tag: TypeTag[S2], s3tag: TypeTag[S3]): StatusOf3.StringentActionResult[AnyContent, S1, S2, S3] =
+        new StatusOf3.StringentActionResult[AnyContent, S1, S2, S3](action { block.result })
+
+      //apply(block: R[AnyContent] => Result): Action[AnyContent]
+      def anyContent[S1 <: StringentStatus, S2 <: StringentStatus, S3 <: StringentStatus](block: R[AnyContent] => StatusOf3.AnyOf[S1, S2, S3])(implicit s1tag: TypeTag[S1], s2tag: TypeTag[S2], s3tag: TypeTag[S3]): StatusOf3.StringentActionResult[AnyContent, S1, S2, S3] =
+        new StatusOf3.StringentActionResult[AnyContent, S1, S2, S3](action { req: R[AnyContent] =>
+          block(req).result
+        })
+
+      //async(block: => Future[Result]): Action[AnyContent]
+      def async[S1 <: StringentStatus, S2 <: StringentStatus, S3 <: StringentStatus](block: => Future[StatusOf3.AnyOf[S1, S2, S3]])(implicit s1tag: TypeTag[S1], s2tag: TypeTag[S2], s3tag: TypeTag[S3], executionContext: ExecutionContext): StatusOf3.StringentActionResult[AnyContent, S1, S2, S3] =
+        new StatusOf3.StringentActionResult[AnyContent, S1, S2, S3](action.async {
+          block.map(_.result)
+        })
+
+      //async(block: R[AnyContent] => Future[Result]): Action[AnyContent]
+      def anyContentAsync[S1 <: StringentStatus, S2 <: StringentStatus, S3 <: StringentStatus](block: R[AnyContent] => Future[StatusOf3.AnyOf[S1, S2, S3]])(implicit s1tag: TypeTag[S1], s2tag: TypeTag[S2], s3tag: TypeTag[S3], executionContext: ExecutionContext): StatusOf3.StringentActionResult[AnyContent, S1, S2, S3] =
+        new StatusOf3.StringentActionResult[AnyContent, S1, S2, S3](action.async{ req: R[AnyContent] =>
+          block(req).map(_.result)
+        })
+
+      //async[A](bodyParser: BodyParser[A])(block: R[A] => Future[Result]): Action[A]
+      def withContentAsync[A, S1 <: StringentStatus, S2 <: StringentStatus, S3 <: StringentStatus](bodyParser: BodyParser[A])(block: R[A] => Future[StatusOf3.AnyOf[S1, S2, S3]])(implicit s1tag: TypeTag[S1], s2tag: TypeTag[S2], s3tag: TypeTag[S3], executionContext: ExecutionContext): StatusOf3.StringentActionResult[A, S1, S2, S3] =
         new StatusOf3.StringentActionResult[A, S1, S2, S3](action.async(bodyParser) { req: R[A] =>
-          Future.successful(block(req).result)
-        })
-
-      def withContent[A, S1 <: StringentStatus, S2 <: StringentStatus, S3 <: StringentStatus, S4 <: StringentStatus](bodyParser: BodyParser[A])(block: R[A] => StatusOf4.AnyOf[S1, S2, S3, S4])(implicit s1tag: TypeTag[S1], s2tag: TypeTag[S2], s3tag: TypeTag[S3], s4tag: TypeTag[S4]): StatusOf4.StringentActionResult[A, S1, S2, S3, S4] =
-        new StatusOf4.StringentActionResult[A, S1, S2, S3, S4](action.async(bodyParser) { req: R[A] =>
-          Future.successful(block(req).result)
-        })
-
-      def withContent[A, S1 <: StringentStatus, S2 <: StringentStatus, S3 <: StringentStatus, S4 <: StringentStatus, S5 <: StringentStatus](bodyParser: BodyParser[A])(block: R[A] => StatusOf5.AnyOf[S1, S2, S3, S4, S5])(implicit s1tag: TypeTag[S1], s2tag: TypeTag[S2], s3tag: TypeTag[S3], s4tag: TypeTag[S4], s5tag: TypeTag[S5]): StatusOf5.StringentActionResult[A, S1, S2, S3, S4, S5] =
-        new StatusOf5.StringentActionResult[A, S1, S2, S3, S4, S5](action.async(bodyParser) { req: R[A] =>
-          Future.successful(block(req).result)
+          block(req).map(_.result)
         })
     }
   }
