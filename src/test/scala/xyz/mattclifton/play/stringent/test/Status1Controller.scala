@@ -31,4 +31,8 @@ class Status1Controller(implicit executionContext: ExecutionContext) extends Con
   def asyncBodyContent = Action.stringent.withContentAsync[TestContent, OkStatus, BadRequestStatus](parse.json[TestContent]){ request =>
     Future(Ok)
   }
+
+  def blockWithResult = Action.stringent[OkWithContent[TestResponse], BadRequestStatus]{
+    Ok.withContent(TestResponse(1, "test"))
+  }
 }

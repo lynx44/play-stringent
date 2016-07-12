@@ -25,6 +25,7 @@ class Status4Controller(implicit executionContext: ExecutionContext) extends Con
   }
 
   def asyncAnyContent = Action.stringent.anyContentAsync[OkStatus, BadRequestStatus, UnauthorizedStatus, CreatedStatus]{ request =>
+
     Future(Ok)
   }
 
