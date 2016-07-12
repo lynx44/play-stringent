@@ -12,27 +12,31 @@ class Status1Controller(implicit executionContext: ExecutionContext) extends Con
     Ok
   }
 
-  def anyContent = Action.stringent.anyContent[OkStatus, BadRequestStatus]{ request =>
+  def anyContent = Action.stringent.anyContent[OkStatus]{ request =>
     Ok
   }
 
-  def block = Action.stringent[OkStatus, BadRequestStatus]{
+  def block = Action.stringent[OkStatus]{
     Ok
   }
 
-  def asyncBlock = Action.stringent.async[OkStatus, BadRequestStatus]{
+  def asyncBlock = Action.stringent.async[OkStatus]{
     Future(Ok)
   }
 
-  def asyncAnyContent = Action.stringent.anyContentAsync[OkStatus, BadRequestStatus]{ request =>
+  def asyncAnyContent = Action.stringent.anyContentAsync[OkStatus]{ request =>
     Future(Ok)
   }
 
-  def asyncBodyContent = Action.stringent.withContentAsync[TestContent, OkStatus, BadRequestStatus](parse.json[TestContent]){ request =>
+  def asyncBodyContent = Action.stringent.withContentAsync[TestContent, OkStatus](parse.json[TestContent]){ request =>
     Future(Ok)
   }
 
-  def blockWithResult = Action.stringent[OkWithContent[TestResponse], BadRequestStatus]{
+  def blockWithContent = Action.stringent[OkWithContent[TestResponse]]{
     Ok.withContent(TestResponse(1, "test"))
+  }
+
+  def redirect = Action.stringent[SeeOtherStatus]{
+    RedirectTo("https://mattclifton.xyz")
   }
 }

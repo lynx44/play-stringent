@@ -20,354 +20,353 @@ trait StringentActions extends Results {
    * Updated Status Codes
    */
 
-////  /** Generates a ‘203 NON_AUTHORITATIVE_INFORMATION’ result. */
-////  val NonAuthoritativeInformation = new Status(NON_AUTHORITATIVE_INFORMATION)
-////
-//  override val NonAuthoritativeInformation: NonAuthoritativeInformationStatus = new NonAuthoritativeInformationStatus()
-//  class NonAuthoritativeInformationStatus() extends StringentStatus(play.api.http.Status.NON_AUTHORITATIVE_INFORMATION) {
-//    override def withContent[C](content: C)(implicit writeable: Writeable[C]): NonAuthoritativeInformationWithContent[C] =
-//      new NonAuthoritativeInformationWithContent[C](super.withContent(content))
-//  }
-//  class NonAuthoritativeInformationWithContent[C](content: StringentContentStatus[C]) extends StringentContentStatus[C](content.status, content.body)
-//
-////  /** Generates a ‘204 NO_CONTENT’ result. */
-////  val NoContent = Result(header = ResponseHeader(NO_CONTENT), body = HttpEntity.NoEntity)
-////
-//  override val NoContent: NoContentStatus = new NoContentStatus()
-//  class NoContentStatus() extends StringentStatus(play.api.http.Status.NO_CONTENT) {
-//    override def withContent[C](content: C)(implicit writeable: Writeable[C]): NoContentWithContent[C] =
-//      new NoContentWithContent[C](super.withContent(content))
-//  }
-//  class NoContentWithContent[C](content: StringentContentStatus[C]) extends StringentContentStatus[C](content.status, content.body)
-////  /** Generates a ‘205 RESET_CONTENT’ result. */
-////  val ResetContent = Result(header = ResponseHeader(RESET_CONTENT), body = HttpEntity.NoEntity)
-////
-//
-//  override val ResetContent: ResetContentStatus = new ResetContentStatus()
-//  class ResetContentStatus() extends StringentStatus(play.api.http.Status.RESET_CONTENT) {
-//    override def withContent[C](content: C)(implicit writeable: Writeable[C]): ResetContentWithContent[C] =
-//      new ResetContentWithContent[C](super.withContent(content))
-//  }
-//  class ResetContentWithContent[C](content: StringentContentStatus[C]) extends StringentContentStatus[C](content.status, content.body)
-////  /** Generates a ‘206 PARTIAL_CONTENT’ result. */
-////  val PartialContent = new Status(PARTIAL_CONTENT)
-////
-//
-//  override val Ok: OkStatus = new OkStatus()
-//  class OkStatus() extends StringentStatus(play.api.http.Status.OK) {
-//    override def withContent[C](content: C)(implicit writeable: Writeable[C]): OkWithContent[C] =
-//      new OkWithContent[C](super.withContent(content))
-//  }
-//  class OkWithContent[C](content: StringentContentStatus[C]) extends StringentContentStatus[C](content.status, content.body)
-////  /** Generates a ‘207 MULTI_STATUS’ result. */
-////  val MultiStatus = new Status(MULTI_STATUS)
-////
-//  override val Ok: OkStatus = new OkStatus()
-//  class OkStatus() extends StringentStatus(play.api.http.Status.OK) {
-//    override def withContent[C](content: C)(implicit writeable: Writeable[C]): OkWithContent[C] =
-//      new OkWithContent[C](super.withContent(content))
-//  }
-//  class OkWithContent[C](content: StringentContentStatus[C]) extends StringentContentStatus[C](content.status, content.body)
-////  /**
-////    * Generates a ‘301 MOVED_PERMANENTLY’ simple result.
-////    *
-////    * @param url the URL to redirect to
-////    */
-////  def MovedPermanently(url: String): Result = Redirect(url, MOVED_PERMANENTLY)
-////
-//  override val Ok: OkStatus = new OkStatus()
-//  class OkStatus() extends StringentStatus(play.api.http.Status.OK) {
-//    override def withContent[C](content: C)(implicit writeable: Writeable[C]): OkWithContent[C] =
-//      new OkWithContent[C](super.withContent(content))
-//  }
-//  class OkWithContent[C](content: StringentContentStatus[C]) extends StringentContentStatus[C](content.status, content.body)
-////  /**
-////    * Generates a ‘302 FOUND’ simple result.
-////    *
-////    * @param url the URL to redirect to
-////    */
-////  def Found(url: String): Result = Redirect(url, FOUND)
-////
-//  override val Ok: OkStatus = new OkStatus()
-//  class OkStatus() extends StringentStatus(play.api.http.Status.OK) {
-//    override def withContent[C](content: C)(implicit writeable: Writeable[C]): OkWithContent[C] =
-//      new OkWithContent[C](super.withContent(content))
-//  }
-//  class OkWithContent[C](content: StringentContentStatus[C]) extends StringentContentStatus[C](content.status, content.body)
-////  /**
-////    * Generates a ‘303 SEE_OTHER’ simple result.
-////    *
-////    * @param url the URL to redirect to
-////    */
-////  def SeeOther(url: String): Result = Redirect(url, SEE_OTHER)
-////
-//  override val Ok: OkStatus = new OkStatus()
-//  class OkStatus() extends StringentStatus(play.api.http.Status.OK) {
-//    override def withContent[C](content: C)(implicit writeable: Writeable[C]): OkWithContent[C] =
-//      new OkWithContent[C](super.withContent(content))
-//  }
-//  class OkWithContent[C](content: StringentContentStatus[C]) extends StringentContentStatus[C](content.status, content.body)
-////  /** Generates a ‘304 NOT_MODIFIED’ result. */
-////  val NotModified = Result(header = ResponseHeader(NOT_MODIFIED), body = HttpEntity.NoEntity)
-////
-//  override val Ok: OkStatus = new OkStatus()
-//  class OkStatus() extends StringentStatus(play.api.http.Status.OK) {
-//    override def withContent[C](content: C)(implicit writeable: Writeable[C]): OkWithContent[C] =
-//      new OkWithContent[C](super.withContent(content))
-//  }
-//  class OkWithContent[C](content: StringentContentStatus[C]) extends StringentContentStatus[C](content.status, content.body)
-////  /**
-////    * Generates a ‘307 TEMPORARY_REDIRECT’ simple result.
-////    *
-////    * @param url the URL to redirect to
-////    */
-////  def TemporaryRedirect(url: String): Result = Redirect(url, TEMPORARY_REDIRECT)
-////
-//  override val Ok: OkStatus = new OkStatus()
-//  class OkStatus() extends StringentStatus(play.api.http.Status.OK) {
-//    override def withContent[C](content: C)(implicit writeable: Writeable[C]): OkWithContent[C] =
-//      new OkWithContent[C](super.withContent(content))
-//  }
-//  class OkWithContent[C](content: StringentContentStatus[C]) extends StringentContentStatus[C](content.status, content.body)
-////  /**
-////    * Generates a ‘308 PERMANENT_REDIRECT’ simple result.
-////    *
-////    * @param url the URL to redirect to
-////    */
-////  def PermanentRedirect(url: String): Result = Redirect(url, PERMANENT_REDIRECT)
-//  override val Ok: OkStatus = new OkStatus()
-//  class OkStatus() extends StringentStatus(play.api.http.Status.OK) {
-//    override def withContent[C](content: C)(implicit writeable: Writeable[C]): OkWithContent[C] =
-//      new OkWithContent[C](super.withContent(content))
-//  }
-//  class OkWithContent[C](content: StringentContentStatus[C]) extends StringentContentStatus[C](content.status, content.body)
-//
-////
-////  /** Generates a ‘402 PAYMENT_REQUIRED’ result. */
-////  val PaymentRequired = new Status(PAYMENT_REQUIRED)
-////
-//  override val Ok: OkStatus = new OkStatus()
-//  class OkStatus() extends StringentStatus(play.api.http.Status.OK) {
-//    override def withContent[C](content: C)(implicit writeable: Writeable[C]): OkWithContent[C] =
-//      new OkWithContent[C](super.withContent(content))
-//  }
-//  class OkWithContent[C](content: StringentContentStatus[C]) extends StringentContentStatus[C](content.status, content.body)
-////  /** Generates a ‘403 FORBIDDEN’ result. */
-////  val Forbidden = new Status(FORBIDDEN)
-////
-//  override val Ok: OkStatus = new OkStatus()
-//  class OkStatus() extends StringentStatus(play.api.http.Status.OK) {
-//    override def withContent[C](content: C)(implicit writeable: Writeable[C]): OkWithContent[C] =
-//      new OkWithContent[C](super.withContent(content))
-//  }
-//  class OkWithContent[C](content: StringentContentStatus[C]) extends StringentContentStatus[C](content.status, content.body)
-////  /** Generates a ‘404 NOT_FOUND’ result. */
-////  val NotFound = new Status(NOT_FOUND)
-////
-//  override val Ok: OkStatus = new OkStatus()
-//  class OkStatus() extends StringentStatus(play.api.http.Status.OK) {
-//    override def withContent[C](content: C)(implicit writeable: Writeable[C]): OkWithContent[C] =
-//      new OkWithContent[C](super.withContent(content))
-//  }
-//  class OkWithContent[C](content: StringentContentStatus[C]) extends StringentContentStatus[C](content.status, content.body)
-////  /** Generates a ‘405 METHOD_NOT_ALLOWED’ result. */
-////  val MethodNotAllowed = new Status(METHOD_NOT_ALLOWED)
-////
-//  override val Ok: OkStatus = new OkStatus()
-//  class OkStatus() extends StringentStatus(play.api.http.Status.OK) {
-//    override def withContent[C](content: C)(implicit writeable: Writeable[C]): OkWithContent[C] =
-//      new OkWithContent[C](super.withContent(content))
-//  }
-//  class OkWithContent[C](content: StringentContentStatus[C]) extends StringentContentStatus[C](content.status, content.body)
-////  /** Generates a ‘406 NOT_ACCEPTABLE’ result. */
-////  val NotAcceptable = new Status(NOT_ACCEPTABLE)
-////
-//  override val Ok: OkStatus = new OkStatus()
-//  class OkStatus() extends StringentStatus(play.api.http.Status.OK) {
-//    override def withContent[C](content: C)(implicit writeable: Writeable[C]): OkWithContent[C] =
-//      new OkWithContent[C](super.withContent(content))
-//  }
-//  class OkWithContent[C](content: StringentContentStatus[C]) extends StringentContentStatus[C](content.status, content.body)
-////  /** Generates a ‘408 REQUEST_TIMEOUT’ result. */
-////  val RequestTimeout = new Status(REQUEST_TIMEOUT)
-////
-//  override val Ok: OkStatus = new OkStatus()
-//  class OkStatus() extends StringentStatus(play.api.http.Status.OK) {
-//    override def withContent[C](content: C)(implicit writeable: Writeable[C]): OkWithContent[C] =
-//      new OkWithContent[C](super.withContent(content))
-//  }
-//  class OkWithContent[C](content: StringentContentStatus[C]) extends StringentContentStatus[C](content.status, content.body)
-////  /** Generates a ‘409 CONFLICT’ result. */
-////  val Conflict = new Status(CONFLICT)
-////
-//  override val Ok: OkStatus = new OkStatus()
-//  class OkStatus() extends StringentStatus(play.api.http.Status.OK) {
-//    override def withContent[C](content: C)(implicit writeable: Writeable[C]): OkWithContent[C] =
-//      new OkWithContent[C](super.withContent(content))
-//  }
-//  class OkWithContent[C](content: StringentContentStatus[C]) extends StringentContentStatus[C](content.status, content.body)
-////  /** Generates a ‘410 GONE’ result. */
-////  val Gone = new Status(GONE)
-////
-//  override val Ok: OkStatus = new OkStatus()
-//  class OkStatus() extends StringentStatus(play.api.http.Status.OK) {
-//    override def withContent[C](content: C)(implicit writeable: Writeable[C]): OkWithContent[C] =
-//      new OkWithContent[C](super.withContent(content))
-//  }
-//  class OkWithContent[C](content: StringentContentStatus[C]) extends StringentContentStatus[C](content.status, content.body)
-////  /** Generates a ‘412 PRECONDITION_FAILED’ result. */
-////  val PreconditionFailed = new Status(PRECONDITION_FAILED)
-////
-//  override val Ok: OkStatus = new OkStatus()
-//  class OkStatus() extends StringentStatus(play.api.http.Status.OK) {
-//    override def withContent[C](content: C)(implicit writeable: Writeable[C]): OkWithContent[C] =
-//      new OkWithContent[C](super.withContent(content))
-//  }
-//  class OkWithContent[C](content: StringentContentStatus[C]) extends StringentContentStatus[C](content.status, content.body)
-////  /** Generates a ‘413 REQUEST_ENTITY_TOO_LARGE’ result. */
-////  val EntityTooLarge = new Status(REQUEST_ENTITY_TOO_LARGE)
-////
-//  override val Ok: OkStatus = new OkStatus()
-//  class OkStatus() extends StringentStatus(play.api.http.Status.OK) {
-//    override def withContent[C](content: C)(implicit writeable: Writeable[C]): OkWithContent[C] =
-//      new OkWithContent[C](super.withContent(content))
-//  }
-//  class OkWithContent[C](content: StringentContentStatus[C]) extends StringentContentStatus[C](content.status, content.body)
-////  /** Generates a ‘414 REQUEST_URI_TOO_LONG’ result. */
-////  val UriTooLong = new Status(REQUEST_URI_TOO_LONG)
-////
-//  override val Ok: OkStatus = new OkStatus()
-//  class OkStatus() extends StringentStatus(play.api.http.Status.OK) {
-//    override def withContent[C](content: C)(implicit writeable: Writeable[C]): OkWithContent[C] =
-//      new OkWithContent[C](super.withContent(content))
-//  }
-//  class OkWithContent[C](content: StringentContentStatus[C]) extends StringentContentStatus[C](content.status, content.body)
-////  /** Generates a ‘415 UNSUPPORTED_MEDIA_TYPE’ result. */
-////  val UnsupportedMediaType = new Status(UNSUPPORTED_MEDIA_TYPE)
-////
-//  override val Ok: OkStatus = new OkStatus()
-//  class OkStatus() extends StringentStatus(play.api.http.Status.OK) {
-//    override def withContent[C](content: C)(implicit writeable: Writeable[C]): OkWithContent[C] =
-//      new OkWithContent[C](super.withContent(content))
-//  }
-//  class OkWithContent[C](content: StringentContentStatus[C]) extends StringentContentStatus[C](content.status, content.body)
-////  /** Generates a ‘417 EXPECTATION_FAILED’ result. */
-////  val ExpectationFailed = new Status(EXPECTATION_FAILED)
-////
-//  override val Ok: OkStatus = new OkStatus()
-//  class OkStatus() extends StringentStatus(play.api.http.Status.OK) {
-//    override def withContent[C](content: C)(implicit writeable: Writeable[C]): OkWithContent[C] =
-//      new OkWithContent[C](super.withContent(content))
-//  }
-//  class OkWithContent[C](content: StringentContentStatus[C]) extends StringentContentStatus[C](content.status, content.body)
-////  /** Generates a ‘422 UNPROCESSABLE_ENTITY’ result. */
-////  val UnprocessableEntity = new Status(UNPROCESSABLE_ENTITY)
-////
-//  override val Ok: OkStatus = new OkStatus()
-//  class OkStatus() extends StringentStatus(play.api.http.Status.OK) {
-//    override def withContent[C](content: C)(implicit writeable: Writeable[C]): OkWithContent[C] =
-//      new OkWithContent[C](super.withContent(content))
-//  }
-//  class OkWithContent[C](content: StringentContentStatus[C]) extends StringentContentStatus[C](content.status, content.body)
-////  /** Generates a ‘423 LOCKED’ result. */
-////  val Locked = new Status(LOCKED)
-////
-//  override val Ok: OkStatus = new OkStatus()
-//  class OkStatus() extends StringentStatus(play.api.http.Status.OK) {
-//    override def withContent[C](content: C)(implicit writeable: Writeable[C]): OkWithContent[C] =
-//      new OkWithContent[C](super.withContent(content))
-//  }
-//  class OkWithContent[C](content: StringentContentStatus[C]) extends StringentContentStatus[C](content.status, content.body)
-////  /** Generates a ‘424 FAILED_DEPENDENCY’ result. */
-////  val FailedDependency = new Status(FAILED_DEPENDENCY)
-////
-//  override val Ok: OkStatus = new OkStatus()
-//  class OkStatus() extends StringentStatus(play.api.http.Status.OK) {
-//    override def withContent[C](content: C)(implicit writeable: Writeable[C]): OkWithContent[C] =
-//      new OkWithContent[C](super.withContent(content))
-//  }
-//  class OkWithContent[C](content: StringentContentStatus[C]) extends StringentContentStatus[C](content.status, content.body)
-////  /** Generates a ‘429 TOO_MANY_REQUESTS’ result. */
-////  val TooManyRequests = new Status(TOO_MANY_REQUESTS)
-////
-//  override val Ok: OkStatus = new OkStatus()
-//  class OkStatus() extends StringentStatus(play.api.http.Status.OK) {
-//    override def withContent[C](content: C)(implicit writeable: Writeable[C]): OkWithContent[C] =
-//      new OkWithContent[C](super.withContent(content))
-//  }
-//  class OkWithContent[C](content: StringentContentStatus[C]) extends StringentContentStatus[C](content.status, content.body)
-////  /** Generates a ‘429 TOO_MANY_REQUEST’ result. */
-////  @deprecated("Use TooManyRequests instead", "3.0.0")
-////  val TooManyRequest = TooManyRequests
-////
-//  override val Ok: OkStatus = new OkStatus()
-//  class OkStatus() extends StringentStatus(play.api.http.Status.OK) {
-//    override def withContent[C](content: C)(implicit writeable: Writeable[C]): OkWithContent[C] =
-//      new OkWithContent[C](super.withContent(content))
-//  }
-//  class OkWithContent[C](content: StringentContentStatus[C]) extends StringentContentStatus[C](content.status, content.body)
-////  /** Generates a ‘500 INTERNAL_SERVER_ERROR’ result. */
-////  val InternalServerError = new Status(INTERNAL_SERVER_ERROR)
-////
-//  override val Ok: OkStatus = new OkStatus()
-//  class OkStatus() extends StringentStatus(play.api.http.Status.OK) {
-//    override def withContent[C](content: C)(implicit writeable: Writeable[C]): OkWithContent[C] =
-//      new OkWithContent[C](super.withContent(content))
-//  }
-//  class OkWithContent[C](content: StringentContentStatus[C]) extends StringentContentStatus[C](content.status, content.body)
-////  /** Generates a ‘501 NOT_IMPLEMENTED’ result. */
-////  val NotImplemented = new Status(NOT_IMPLEMENTED)
-////
-//  override val Ok: OkStatus = new OkStatus()
-//  class OkStatus() extends StringentStatus(play.api.http.Status.OK) {
-//    override def withContent[C](content: C)(implicit writeable: Writeable[C]): OkWithContent[C] =
-//      new OkWithContent[C](super.withContent(content))
-//  }
-//  class OkWithContent[C](content: StringentContentStatus[C]) extends StringentContentStatus[C](content.status, content.body)
-////  /** Generates a ‘502 BAD_GATEWAY’ result. */
-////  val BadGateway = new Status(BAD_GATEWAY)
-////
-//  override val Ok: OkStatus = new OkStatus()
-//  class OkStatus() extends StringentStatus(play.api.http.Status.OK) {
-//    override def withContent[C](content: C)(implicit writeable: Writeable[C]): OkWithContent[C] =
-//      new OkWithContent[C](super.withContent(content))
-//  }
-//  class OkWithContent[C](content: StringentContentStatus[C]) extends StringentContentStatus[C](content.status, content.body)
-////  /** Generates a ‘503 SERVICE_UNAVAILABLE’ result. */
-////  val ServiceUnavailable = new Status(SERVICE_UNAVAILABLE)
-////
-//  override val Ok: OkStatus = new  OkStatus()
-//  class OkStatus() extends StringentStatus(play.api.http.Status.OK) {
-//    override def withContent[C](content: C)(implicit writeable: Writeable[C]): OkWithContent[C] =
-//      new OkWithContent[C](super.withContent(content))
-//  }
-//  class OkWithContent[C](content: StringentContentStatus[C]) extends StringentContentStatus[C](content.status, content.body)
-////  /** Generates a ‘504 GATEWAY_TIMEOUT’ result. */
-////  val GatewayTimeout = new Status(GATEWAY_TIMEOUT)
-////
-//  override val Ok: OkStatus = new OkStatus()
-//  class OkStatus() extends StringentStatus(play.api.http.Status.OK) {
-//    override def withContent[C](content: C)(implicit writeable: Writeable[C]): OkWithContent[C] =
-//      new OkWithContent[C](super.withContent(content))
-//  }
-//  class OkWithContent[C](content: StringentContentStatus[C]) extends StringentContentStatus[C](content.status, content.body)
-////  /** Generates a ‘505 HTTP_VERSION_NOT_SUPPORTED’ result. */
-////  val HttpVersionNotSupported = new Status(HTTP_VERSION_NOT_SUPPORTED)
-////
-//  override val Ok: OkStatus = new OkStatus()
-//  class OkStatus() extends StringentStatus(play.api.http.Status.OK) {
-//    override def withContent[C](content: C)(implicit writeable: Writeable[C]): OkWithContent[C] =
-//      new OkWithContent[C](super.withContent(content))
-//  }
-//  class OkWithContent[C](content: StringentContentStatus[C]) extends StringentContentStatus[C](content.status, content.body)
-////  /** Generates a ‘507 INSUFFICIENT_STORAGE’ result. */
-////  val InsufficientStorage = new Status(INSUFFICIENT_STORAGE)
-//  override val Ok: OkStatus = new OkStatus()
-//  class OkStatus() extends StringentStatus(play.api.http.Status.OK) {
-//    override def withContent[C](content: C)(implicit writeable: Writeable[C]): OkWithContent[C] =
-//      new OkWithContent[C](super.withContent(content))
-//  }
-//  class OkWithContent[C](content: StringentContentStatus[C]) extends StringentContentStatus[C](content.status, content.body)
+  //  /** Generates a ‘203 NON_AUTHORITATIVE_INFORMATION’ result. */
+  //  val NonAuthoritativeInformation = new Status(NON_AUTHORITATIVE_INFORMATION)
+
+  override val NonAuthoritativeInformation: NonAuthoritativeInformationStatus = new NonAuthoritativeInformationStatus()
+  class NonAuthoritativeInformationStatus() extends StringentStatus(play.api.http.Status.NON_AUTHORITATIVE_INFORMATION) {
+    override def withContent[C](content: C)(implicit writeable: Writeable[C]): NonAuthoritativeInformationWithContent[C] =
+      new NonAuthoritativeInformationWithContent[C](super.withContent(content))
+  }
+  class NonAuthoritativeInformationWithContent[C](content: StringentContentStatus[C]) extends StringentContentStatus[C](content.status, content.body)
+
+  //  /** Generates a ‘204 NO_CONTENT’ result. */
+  //  val NoContent = Result(header = ResponseHeader(NO_CONTENT), body = HttpEntity.NoEntity)
+
+  override val NoContent: NoContentStatus = new NoContentStatus()
+  class NoContentStatus() extends StringentResultImpl(ResponseHeader(play.api.http.Status.NO_CONTENT))
+
+  //  /** Generates a ‘205 RESET_CONTENT’ result. */
+  //  val ResetContent = Result(header = ResponseHeader(RESET_CONTENT), body = HttpEntity.NoEntity)
+  //
+
+  override val ResetContent: ResetContentStatus = new ResetContentStatus()
+  class ResetContentStatus() extends StringentResultImpl(ResponseHeader(play.api.http.Status.RESET_CONTENT))
+
+  //  /** Generates a ‘206 PARTIAL_CONTENT’ result. */
+  //  val PartialContent = new Status(PARTIAL_CONTENT)
+  //
+  override val PartialContent: PartialContentStatus = new PartialContentStatus()
+  class PartialContentStatus() extends StringentStatus(play.api.http.Status.PARTIAL_CONTENT) {
+    override def withContent[C](content: C)(implicit writeable: Writeable[C]): PartialContentWithContent[C] =
+      new PartialContentWithContent[C](super.withContent(content))
+  }
+  class PartialContentWithContent[C](content: StringentContentStatus[C]) extends StringentContentStatus[C](content.status, content.body)
+
+  //  /** Generates a ‘207 MULTI_STATUS’ result. */
+  //  val MultiStatus = new Status(MULTI_STATUS)
+
+  override val MultiStatus: MultiStatusStatus = new MultiStatusStatus()
+  class MultiStatusStatus() extends StringentStatus(play.api.http.Status.MULTI_STATUS) {
+    override def withContent[C](content: C)(implicit writeable: Writeable[C]): MultiStatusWithContent[C] =
+      new MultiStatusWithContent[C](super.withContent(content))
+  }
+  class MultiStatusWithContent[C](content: StringentContentStatus[C]) extends StringentContentStatus[C](content.status, content.body)
+
+  //  /**
+  //    * Generates a ‘301 MOVED_PERMANENTLY’ simple result.
+  //    *
+  //    * @param url the URL to redirect to
+  //    */
+  //  def MovedPermanently(url: String): Result = Redirect(url, MOVED_PERMANENTLY)
+
+  override def MovedPermanently(url: String): MovedPermanentlyStatus = RedirectTo(new MovedPermanentlyStatus(), url, Map.empty)
+  class MovedPermanentlyStatus() extends StringentStatus(play.api.http.Status.MOVED_PERMANENTLY)
+
+  //  /**
+  //    * Generates a ‘302 FOUND’ simple result.
+  //    *
+  //    * @param url the URL to redirect to
+  //    */
+  //  def Found(url: String): Result = Redirect(url, FOUND)
+
+  override def Found(url: String): FoundStatus = RedirectTo(new FoundStatus(), url, Map.empty)
+  class FoundStatus() extends StringentStatus(play.api.http.Status.FOUND)
+
+  //  /**
+  //    * Generates a ‘303 SEE_OTHER’ simple result.
+  //    *
+  //    * @param url the URL to redirect to
+  //    */
+  //  def SeeOther(url: String): Result = Redirect(url, SEE_OTHER)
+
+  override def SeeOther(url: String): SeeOtherStatus = RedirectTo(new SeeOtherStatus(), url, Map.empty)
+  class SeeOtherStatus() extends StringentStatus(play.api.http.Status.SEE_OTHER)
+
+  //  /** Generates a ‘304 NOT_MODIFIED’ result. */
+  //  val NotModified = Result(header = ResponseHeader(NOT_MODIFIED), body = HttpEntity.NoEntity)
+
+  override val NotModified: NotModifiedStatus = new NotModifiedStatus()
+  class NotModifiedStatus() extends StringentResultImpl(ResponseHeader(play.api.http.Status.NOT_MODIFIED))
+
+  //  /**
+  //    * Generates a ‘307 TEMPORARY_REDIRECT’ simple result.
+  //    *
+  //    * @param url the URL to redirect to
+  //    */
+  //  def TemporaryRedirect(url: String): Result = Redirect(url, TEMPORARY_REDIRECT)
+
+  override def TemporaryRedirect(url: String): TemporaryRedirectStatus = RedirectTo(new TemporaryRedirectStatus(), url, Map.empty)
+  class TemporaryRedirectStatus() extends StringentStatus(play.api.http.Status.TEMPORARY_REDIRECT)
+
+  //  /**
+  //    * Generates a ‘308 PERMANENT_REDIRECT’ simple result.
+  //    *
+  //    * @param url the URL to redirect to
+  //    */
+  //  def PermanentRedirect(url: String): Result = Redirect(url, PERMANENT_REDIRECT)
+
+  override def PermanentRedirect(url: String): PermanentRedirectStatus = RedirectTo(new PermanentRedirectStatus(), url, Map.empty)
+  class PermanentRedirectStatus() extends StringentStatus(play.api.http.Status.PERMANENT_REDIRECT)
+
+  private def RedirectTo[A <: StringentStatus](status: A, url: String, queryString: Map[String, Seq[String]]): A = {
+    val redirect = super.Redirect(url)
+    status.withHeaders(redirect.header.headers.toSeq:_*).asInstanceOf[A]
+  }
+  def RedirectTo(url: String, queryString: Map[String, Seq[String]] = Map.empty): SeeOtherStatus = RedirectTo(new SeeOtherStatus(), url, queryString)
+  override def Redirect(call: Call): SeeOtherStatus = RedirectTo(new SeeOtherStatus(), call.url, Map.empty)
+
+  //
+  //  /** Generates a ‘402 PAYMENT_REQUIRED’ result. */
+  //  val PaymentRequired = new Status(PAYMENT_REQUIRED)
+  //
+  
+  override val PaymentRequired: PaymentRequiredStatus = new PaymentRequiredStatus()
+  class PaymentRequiredStatus() extends StringentStatus(play.api.http.Status.PAYMENT_REQUIRED) {
+    override def withContent[C](content: C)(implicit writeable: Writeable[C]): PaymentRequiredWithContent[C] =
+      new PaymentRequiredWithContent[C](super.withContent(content))
+  }
+  class PaymentRequiredWithContent[C](content: StringentContentStatus[C]) extends StringentContentStatus[C](content.status, content.body)
+
+  //  /** Generates a ‘403 FORBIDDEN’ result. */
+  //  val Forbidden = new Status(FORBIDDEN)
+
+  override val Forbidden: ForbiddenStatus = new ForbiddenStatus()
+  class ForbiddenStatus() extends StringentStatus(play.api.http.Status.FORBIDDEN) {
+    override def withContent[C](content: C)(implicit writeable: Writeable[C]): ForbiddenWithContent[C] =
+      new ForbiddenWithContent[C](super.withContent(content))
+  }
+  class ForbiddenWithContent[C](content: StringentContentStatus[C]) extends StringentContentStatus[C](content.status, content.body)
+
+  //  /** Generates a ‘404 NOT_FOUND’ result. */
+  //  val NotFound = new Status(NOT_FOUND)
+
+  override val NotFound: NotFoundStatus = new NotFoundStatus()
+  class NotFoundStatus() extends StringentStatus(play.api.http.Status.NOT_FOUND) {
+    override def withContent[C](content: C)(implicit writeable: Writeable[C]): NotFoundWithContent[C] =
+      new NotFoundWithContent[C](super.withContent(content))
+  }
+  class NotFoundWithContent[C](content: StringentContentStatus[C]) extends StringentContentStatus[C](content.status, content.body)
+
+  //  /** Generates a ‘405 METHOD_NOT_ALLOWED’ result. */
+  //  val MethodNotAllowed = new Status(METHOD_NOT_ALLOWED)
+
+  override val MethodNotAllowed: MethodNotAllowedStatus = new MethodNotAllowedStatus()
+  class MethodNotAllowedStatus() extends StringentStatus(play.api.http.Status.METHOD_NOT_ALLOWED) {
+    override def withContent[C](content: C)(implicit writeable: Writeable[C]): MethodNotAllowedWithContent[C] =
+      new MethodNotAllowedWithContent[C](super.withContent(content))
+  }
+  class MethodNotAllowedWithContent[C](content: StringentContentStatus[C]) extends StringentContentStatus[C](content.status, content.body)
+
+  //  /** Generates a ‘406 NOT_ACCEPTABLE’ result. */
+  //  val NotAcceptable = new Status(NOT_ACCEPTABLE)
+
+  override val NotAcceptable: NotAcceptableStatus = new NotAcceptableStatus()
+  class NotAcceptableStatus() extends StringentStatus(play.api.http.Status.NOT_ACCEPTABLE) {
+    override def withContent[C](content: C)(implicit writeable: Writeable[C]): NotAcceptableWithContent[C] =
+      new NotAcceptableWithContent[C](super.withContent(content))
+  }
+  class NotAcceptableWithContent[C](content: StringentContentStatus[C]) extends StringentContentStatus[C](content.status, content.body)
+
+  //  /** Generates a ‘408 REQUEST_TIMEOUT’ result. */
+  //  val RequestTimeout = new Status(REQUEST_TIMEOUT)
+
+  override val RequestTimeout: RequestTimeoutStatus = new RequestTimeoutStatus()
+  class RequestTimeoutStatus() extends StringentStatus(play.api.http.Status.REQUEST_TIMEOUT) {
+    override def withContent[C](content: C)(implicit writeable: Writeable[C]): RequestTimeoutWithContent[C] =
+      new RequestTimeoutWithContent[C](super.withContent(content))
+  }
+  class RequestTimeoutWithContent[C](content: StringentContentStatus[C]) extends StringentContentStatus[C](content.status, content.body)
+
+  //  /** Generates a ‘409 CONFLICT’ result. */
+  //  val Conflict = new Status(CONFLICT)
+
+  override val Conflict: ConflictStatus = new ConflictStatus()
+  class ConflictStatus() extends StringentStatus(play.api.http.Status.CONFLICT) {
+    override def withContent[C](content: C)(implicit writeable: Writeable[C]): ConflictWithContent[C] =
+      new ConflictWithContent[C](super.withContent(content))
+  }
+  class ConflictWithContent[C](content: StringentContentStatus[C]) extends StringentContentStatus[C](content.status, content.body)
+
+  //  /** Generates a ‘410 GONE’ result. */
+  //  val Gone = new Status(GONE)
+
+  override val Gone: GoneStatus = new GoneStatus()
+  class GoneStatus() extends StringentStatus(play.api.http.Status.GONE) {
+    override def withContent[C](content: C)(implicit writeable: Writeable[C]): GoneWithContent[C] =
+      new GoneWithContent[C](super.withContent(content))
+  }
+  class GoneWithContent[C](content: StringentContentStatus[C]) extends StringentContentStatus[C](content.status, content.body)
+
+  //  /** Generates a ‘412 PRECONDITION_FAILED’ result. */
+  //  val PreconditionFailed = new Status(PRECONDITION_FAILED)
+
+  override val PreconditionFailed: PreconditionFailedStatus = new PreconditionFailedStatus()
+  class PreconditionFailedStatus() extends StringentStatus(play.api.http.Status.PRECONDITION_FAILED) {
+    override def withContent[C](content: C)(implicit writeable: Writeable[C]): PreconditionFailedWithContent[C] =
+      new PreconditionFailedWithContent[C](super.withContent(content))
+  }
+  class PreconditionFailedWithContent[C](content: StringentContentStatus[C]) extends StringentContentStatus[C](content.status, content.body)
+
+  //  /** Generates a ‘413 REQUEST_ENTITY_TOO_LARGE’ result. */
+  //  val EntityTooLarge = new Status(REQUEST_ENTITY_TOO_LARGE)
+
+  override val EntityTooLarge: EntityTooLargeStatus = new EntityTooLargeStatus()
+  class EntityTooLargeStatus() extends StringentStatus(play.api.http.Status.REQUEST_ENTITY_TOO_LARGE) {
+    override def withContent[C](content: C)(implicit writeable: Writeable[C]): EntityTooLargeWithContent[C] =
+      new EntityTooLargeWithContent[C](super.withContent(content))
+  }
+  class EntityTooLargeWithContent[C](content: StringentContentStatus[C]) extends StringentContentStatus[C](content.status, content.body)
+
+  //  /** Generates a ‘414 REQUEST_URI_TOO_LONG’ result. */
+  //  val UriTooLong = new Status(REQUEST_URI_TOO_LONG)
+
+  override val UriTooLong: UriTooLongStatus = new UriTooLongStatus()
+  class UriTooLongStatus() extends StringentStatus(play.api.http.Status.REQUEST_URI_TOO_LONG) {
+    override def withContent[C](content: C)(implicit writeable: Writeable[C]): UriTooLongWithContent[C] =
+      new UriTooLongWithContent[C](super.withContent(content))
+  }
+  class UriTooLongWithContent[C](content: StringentContentStatus[C]) extends StringentContentStatus[C](content.status, content.body)
+
+  //  /** Generates a ‘415 UNSUPPORTED_MEDIA_TYPE’ result. */
+  //  val UnsupportedMediaType = new Status(UNSUPPORTED_MEDIA_TYPE)
+
+  override val UnsupportedMediaType: UnsupportedMediaTypeStatus = new UnsupportedMediaTypeStatus()
+  class UnsupportedMediaTypeStatus() extends StringentStatus(play.api.http.Status.UNSUPPORTED_MEDIA_TYPE) {
+    override def withContent[C](content: C)(implicit writeable: Writeable[C]): UnsupportedMediaTypeWithContent[C] =
+      new UnsupportedMediaTypeWithContent[C](super.withContent(content))
+  }
+  class UnsupportedMediaTypeWithContent[C](content: StringentContentStatus[C]) extends StringentContentStatus[C](content.status, content.body)
+
+  //  /** Generates a ‘417 EXPECTATION_FAILED’ result. */
+  //  val ExpectationFailed = new Status(EXPECTATION_FAILED)
+
+  override val ExpectationFailed: ExpectationFailedStatus = new ExpectationFailedStatus()
+  class ExpectationFailedStatus() extends StringentStatus(play.api.http.Status.EXPECTATION_FAILED) {
+    override def withContent[C](content: C)(implicit writeable: Writeable[C]): ExpectationFailedWithContent[C] =
+      new ExpectationFailedWithContent[C](super.withContent(content))
+  }
+  class ExpectationFailedWithContent[C](content: StringentContentStatus[C]) extends StringentContentStatus[C](content.status, content.body)
+
+  //  /** Generates a ‘422 UNPROCESSABLE_ENTITY’ result. */
+  //  val UnprocessableEntity = new Status(UNPROCESSABLE_ENTITY)
+
+  override val UnprocessableEntity: UnprocessableEntityStatus = new UnprocessableEntityStatus()
+  class UnprocessableEntityStatus() extends StringentStatus(play.api.http.Status.UNPROCESSABLE_ENTITY) {
+    override def withContent[C](content: C)(implicit writeable: Writeable[C]): UnprocessableEntityWithContent[C] =
+      new UnprocessableEntityWithContent[C](super.withContent(content))
+  }
+  class UnprocessableEntityWithContent[C](content: StringentContentStatus[C]) extends StringentContentStatus[C](content.status, content.body)
+
+  //  /** Generates a ‘423 LOCKED’ result. */
+  //  val Locked = new Status(LOCKED)
+
+  override val Locked: LockedStatus = new LockedStatus()
+  class LockedStatus() extends StringentStatus(play.api.http.Status.LOCKED) {
+    override def withContent[C](content: C)(implicit writeable: Writeable[C]): LockedWithContent[C] =
+      new LockedWithContent[C](super.withContent(content))
+  }
+  class LockedWithContent[C](content: StringentContentStatus[C]) extends StringentContentStatus[C](content.status, content.body)
+
+  //  /** Generates a ‘424 FAILED_DEPENDENCY’ result. */
+  //  val FailedDependency = new Status(FAILED_DEPENDENCY)
+
+  override val FailedDependency: FailedDependencyStatus = new FailedDependencyStatus()
+  class FailedDependencyStatus() extends StringentStatus(play.api.http.Status.FAILED_DEPENDENCY) {
+    override def withContent[C](content: C)(implicit writeable: Writeable[C]): FailedDependencyWithContent[C] =
+      new FailedDependencyWithContent[C](super.withContent(content))
+  }
+  class FailedDependencyWithContent[C](content: StringentContentStatus[C]) extends StringentContentStatus[C](content.status, content.body)
+
+  //  /** Generates a ‘429 TOO_MANY_REQUESTS’ result. */
+  //  val TooManyRequests = new Status(TOO_MANY_REQUESTS)
+
+  override val TooManyRequests: TooManyRequestsStatus = new TooManyRequestsStatus()
+  class TooManyRequestsStatus() extends StringentStatus(play.api.http.Status.TOO_MANY_REQUESTS) {
+    override def withContent[C](content: C)(implicit writeable: Writeable[C]): TooManyRequestsWithContent[C] =
+      new TooManyRequestsWithContent[C](super.withContent(content))
+  }
+  class TooManyRequestsWithContent[C](content: StringentContentStatus[C]) extends StringentContentStatus[C](content.status, content.body)
+
+  //  /** Generates a ‘500 INTERNAL_SERVER_ERROR’ result. */
+  //  val InternalServerError = new Status(INTERNAL_SERVER_ERROR)
+
+  override val InternalServerError: InternalServerErrorStatus = new InternalServerErrorStatus()
+  class InternalServerErrorStatus() extends StringentStatus(play.api.http.Status.INTERNAL_SERVER_ERROR) {
+    override def withContent[C](content: C)(implicit writeable: Writeable[C]): InternalServerErrorWithContent[C] =
+      new InternalServerErrorWithContent[C](super.withContent(content))
+  }
+  class InternalServerErrorWithContent[C](content: StringentContentStatus[C]) extends StringentContentStatus[C](content.status, content.body)
+
+  //  /** Generates a ‘501 NOT_IMPLEMENTED’ result. */
+  //  val NotImplemented = new Status(NOT_IMPLEMENTED)
+
+  override val NotImplemented: NotImplementedStatus = new NotImplementedStatus()
+  class NotImplementedStatus() extends StringentStatus(play.api.http.Status.NOT_IMPLEMENTED) {
+    override def withContent[C](content: C)(implicit writeable: Writeable[C]): NotImplementedWithContent[C] =
+      new NotImplementedWithContent[C](super.withContent(content))
+  }
+  class NotImplementedWithContent[C](content: StringentContentStatus[C]) extends StringentContentStatus[C](content.status, content.body)
+
+  //  /** Generates a ‘502 BAD_GATEWAY’ result. */
+  //  val BadGateway = new Status(BAD_GATEWAY)
+
+  override val BadGateway: BadGatewayStatus = new BadGatewayStatus()
+  class BadGatewayStatus() extends StringentStatus(play.api.http.Status.BAD_GATEWAY) {
+    override def withContent[C](content: C)(implicit writeable: Writeable[C]): BadGatewayWithContent[C] =
+      new BadGatewayWithContent[C](super.withContent(content))
+  }
+  class BadGatewayWithContent[C](content: StringentContentStatus[C]) extends StringentContentStatus[C](content.status, content.body)
+
+  //  /** Generates a ‘503 SERVICE_UNAVAILABLE’ result. */
+  //  val ServiceUnavailable = new Status(SERVICE_UNAVAILABLE)
+
+  override val ServiceUnavailable: ServiceUnavailableStatus = new  ServiceUnavailableStatus()
+  class ServiceUnavailableStatus() extends StringentStatus(play.api.http.Status.SERVICE_UNAVAILABLE) {
+    override def withContent[C](content: C)(implicit writeable: Writeable[C]): ServiceUnavailableWithContent[C] =
+      new ServiceUnavailableWithContent[C](super.withContent(content))
+  }
+  class ServiceUnavailableWithContent[C](content: StringentContentStatus[C]) extends StringentContentStatus[C](content.status, content.body)
+
+  //  /** Generates a ‘504 GATEWAY_TIMEOUT’ result. */
+  //  val GatewayTimeout = new Status(GATEWAY_TIMEOUT)
+
+  override val GatewayTimeout: GatewayTimeoutStatus = new GatewayTimeoutStatus()
+  class GatewayTimeoutStatus() extends StringentStatus(play.api.http.Status.GATEWAY_TIMEOUT) {
+    override def withContent[C](content: C)(implicit writeable: Writeable[C]): GatewayTimeoutWithContent[C] =
+      new GatewayTimeoutWithContent[C](super.withContent(content))
+  }
+  class GatewayTimeoutWithContent[C](content: StringentContentStatus[C]) extends StringentContentStatus[C](content.status, content.body)
+
+  //  /** Generates a ‘505 HTTP_VERSION_NOT_SUPPORTED’ result. */
+  //  val HttpVersionNotSupported = new Status(HTTP_VERSION_NOT_SUPPORTED)
+
+  override val HttpVersionNotSupported: HttpVersionNotSupportedStatus = new HttpVersionNotSupportedStatus()
+  class HttpVersionNotSupportedStatus() extends StringentStatus(play.api.http.Status.HTTP_VERSION_NOT_SUPPORTED) {
+    override def withContent[C](content: C)(implicit writeable: Writeable[C]): HttpVersionNotSupportedWithContent[C] =
+      new HttpVersionNotSupportedWithContent[C](super.withContent(content))
+  }
+  class HttpVersionNotSupportedWithContent[C](content: StringentContentStatus[C]) extends StringentContentStatus[C](content.status, content.body)
+
+  //  /** Generates a ‘507 INSUFFICIENT_STORAGE’ result. */
+  //  val InsufficientStorage = new Status(INSUFFICIENT_STORAGE)
+
+  override val InsufficientStorage: InsufficientStorageStatus = new InsufficientStorageStatus()
+  class InsufficientStorageStatus() extends StringentStatus(play.api.http.Status.INSUFFICIENT_STORAGE) {
+    override def withContent[C](content: C)(implicit writeable: Writeable[C]): InsufficientStorageWithContent[C] =
+      new InsufficientStorageWithContent[C](super.withContent(content))
+  }
+  class InsufficientStorageWithContent[C](content: StringentContentStatus[C]) extends StringentContentStatus[C](content.status, content.body)
 
   override val Ok: OkStatus = new OkStatus()
   class OkStatus() extends StringentStatus(play.api.http.Status.OK) {
@@ -550,7 +549,7 @@ trait StringentActions extends Results {
       }
     }
     
-    class StringentResultImpl(override val header: ResponseHeader, override val body: HttpEntity) extends Result(header, body) with StringentResult
+    class StringentResultImpl(override val header: ResponseHeader, override val body: HttpEntity = HttpEntity.NoEntity) extends Result(header, body) with StringentResult
 
     trait StringentResult {
       def header: ResponseHeader
