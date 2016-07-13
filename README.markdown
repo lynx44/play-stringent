@@ -39,7 +39,7 @@ Simply mix in the *StringentActions* trait into your controller:
 
     class Application extends Controller with StringentActions
 
-## What's supported
+## Examples and supported features
 
 Many actions are supported, though some have slightly different semantics:
 
@@ -77,13 +77,13 @@ Note that the method name to return content is *withContent* in play-stringent, 
         Ok(Json.toJson(TestResponse(1, "test")))
     }
 
-Make sure you define a [Writeable](#writeable)
-
 #### Play Stringent
 
     def block = Action.stringent[OkWithContent[TestResponse]{
         Ok.withContent(TestResponse(1, "test"))
     }
+
+Make sure you define a [Writeable](#writeable)
 
 ### Example: Block with request
 
@@ -159,7 +159,7 @@ Make sure you define a [Writeable](#writeable)
 
 Result types are simply the name of the Status/Result code with a _Result_ suffix. For example:
 
-    // Ok + Result == OkResult
+    // Ok + Result = OkResult
     def myAction = Action.stringent[OkResult] = {
         Ok
     }
@@ -171,13 +171,13 @@ If the result is a Status, then it can return a body. To ensure you are returnin
         Ok.withContent(TestResponse(1, "test"))
     }
 
-Make sure you define a [Writeable](#writeable)
+Make sure you define a [Writeable](#writeable) to use *WithContent* statuses.
 
 ## Notes
 
-Since there are many types of redirects, SeeOther was chosen as the default (as Play Framework uses this as it's default redirect).
+Since there are many types of redirects, *SeeOther* was chosen as the default (as Play Framework uses this as it's default redirect).
 
-*RedirectTo* is the play-stringent equivalent of Redirect, due to typing collisions:
+*RedirectTo* is the play-stringent equivalent of *Redirect*, due to typing collisions:
 
     def redirect = Action.stringent[SeeOtherResult]{
         RedirectTo("https://mattclifton.xyz")
@@ -186,7 +186,7 @@ Since there are many types of redirects, SeeOther was chosen as the default (as 
 <a name="writeable"/>
 ## Writeable[T]
 
-Note that to use the *withContent* method, you must define a Writeable[T] rather than using something like Json.toJson. A simple generic JSON solution would look like this:
+Note that to use the *withContent* method, you must define a *Writeable[T]* rather than using something like *Json.toJson*. A simple generic JSON solution would look like this:
 
     implicit def jsonWriteable[A](implicit jsonWriter: Writes[A]): Writeable[A] = new Writeable[A](b => ByteString(Json.toJson(b).toString()), Some("application/json"))
 
@@ -194,7 +194,7 @@ Note that to use the *withContent* method, you must define a Writeable[T] rather
 
 While actions cannot return unspecified result types, they can return less than what is specified in the return type list.
 
-In this example, no error will be returned at compile time due to a lack of a _BadRequest_ return path:
+In this example, no error will be returned at compile time due to a lack of a *BadRequest* return path:
 
     def myAction = Action.stringent[OkResult, BadRequest] = {
         Ok
@@ -239,4 +239,4 @@ In this example, no error will be returned at compile time due to a lack of a _B
 
 ## License
 
-MIT
+[MIT](https://github.com/lynx44/play-stringent/blob/master/LICENSE)
