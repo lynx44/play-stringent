@@ -19,7 +19,7 @@ If you tried to return a response you didn't specify, play-stringent will return
             Ok
         }
         if(userIsAuthorized()) {
-            *Unauthorized* // compile time error
+            Unauthorized // compile time error
         } else {
             BadRequest
         }
@@ -47,6 +47,8 @@ Many actions are supported, though some have slightly different semantics:
         }
     }
 
+Note that the method name to return content is *withContent* in play-stringent, rather than *apply*. (also make sure you define a [Writeable](#writeable))
+
 ### Example 1: Basic Block
 
 #### Standard Play Framework
@@ -71,7 +73,7 @@ Many actions are supported, though some have slightly different semantics:
 
 #### Play Stringent
 
-    def anyContent = Action.stringent.*anyContent*[OkResult]{ request =>
+    def anyContent = Action.stringent.anyContent[OkResult]{ request =>
         Ok
     }
 
@@ -131,6 +133,51 @@ Many actions are supported, though some have slightly different semantics:
         Future(Ok)
     }
 
+## Matching Results with Result types
+
+Result types are simply the name of the Status/Result code with a _Result_ suffix. For example:
+
+    // Ok + Result == OkResult
+    def myAction = Action.stringent[OkResult] = {
+        Ok
+    }
+
+If the result is a Status, then it can return a body. To ensure you are returning a result with the specified body, use the status name with a _WithContent_ suffix. For Example:
+
+    // Ok + WithContent + [Content Entity] = OkWithContent[TestResponse]
+    def blockWithContent = Action.stringent[OkWithContent[TestResponse]]{
+        Ok.withContent(TestResponse(1, "test"))
+    }
+
+Also make sure you define a [Writeable](#writeable)
+
+## Notes
+
+Since there are many types of redirects, SeeOther was chosen as the default (as Play Framework uses this as it's default redirect).
+
+*RedirectTo* is the play-stringent equivalent of Redirect, due to typing collisions:
+
+    def redirect = Action.stringent[SeeOtherResult]{
+        RedirectTo("https://mattclifton.xyz")
+    }
+
+<a name="writeable"/>
+## Writeable[T]
+
+Note that to use the *withContent* method, you must define a Writeable[T] rather than using something like Json.toJson. A simple generic JSON solution would look like this:
+
+    implicit def jsonWriteable[A](implicit jsonWriter: Writes[A]): Writeable[A] = new Writeable[A](b => ByteString(Json.toJson(b).toString()), Some("application/json"))
+
+## Limitations
+
+While actions cannot return unspecified result types, they can return less than what is specified in the return type list.
+
+In this example, no error will be returned at compile time due to a lack of a _BadRequest_ return path:
+
+    def myAction = Action.stringent[OkResult, BadRequest] = {
+        Ok
+    }
+
 ## Method Comparison Lookup
 
     <table>
@@ -167,26 +214,6 @@ Many actions are supported, though some have slightly different semantics:
             <td>    withContentAsync[A, S1 <: StringentResult](bodyParser: BodyParser[A])(block: R[A] => Future[StatusOf1.AnyOf[S1]])</td>
         </tr>
     </table>
-
-## Notes
-
-Since there are many types of redirects, SeeOther was chosen as the default (as Play Framework uses this as it's default redirect).
-
-*RedirectTo* is the play-stringent equivalent of Redirect, due to typing collisions:
-
-    def redirect = Action.stringent[SeeOtherResult]{
-        RedirectTo("https://mattclifton.xyz")
-    }
-
-## Limitations
-
-While actions cannot return unspecified result types, they can return less than what is specified in the return type list.
-
-In this example, no error will be returned at compile time due to a lack of a _BadRequest_ return path:
-
-    def myAction = Action.stringent[OkResult, BadRequest] = {
-        Ok
-    }
 
 ## License
 
