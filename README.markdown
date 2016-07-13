@@ -33,6 +33,12 @@ This gives you self describing actions and compile time safety, so you know the 
 
     "xyz.mattclifton.com" %% "play-stringent" % "2.5.3-SNAPSHOT"
 
+## Getting Started
+
+Simply mix in the *StringentActions* trait into your controller:
+
+    class Application extends Controller with StringentActions
+
 ## What's supported
 
 Many actions are supported, though some have slightly different semantics:
