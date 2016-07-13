@@ -31,7 +31,7 @@ This gives you self describing actions and compile time safety, so you know the 
 
     resolvers += "Sonatype snapshots" at "http://oss.sonatype.org/content/repositories/snapshots/"
 
-    "xyz.mattclifton.com" %% "play-stringent" % "2.5.3-SNAPSHOT"
+    "xyz.mattclifton" %% "play-stringent" % "2.5.3-SNAPSHOT"
 
 ## Getting Started
 
